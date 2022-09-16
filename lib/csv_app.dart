@@ -39,12 +39,12 @@ class CSVApp {
 
   /// Generates the 2 output files from the [listOfItems] list
   Future<void> generateFiles() async {
-    await generateFirstOutputFile();
-    await generateSecondOutputFile();
+    await _generateFirstOutputFile();
+    await _generateSecondOutputFile();
   }
 
   /// Generates first file which contains the name and the avarage
-  Future<void> generateFirstOutputFile() async {
+  Future<void> _generateFirstOutputFile() async {
     Map sumOfPrd = {};
     Map avarageOfPrd = {};
     File output1 = await File('1_output_$fileName').create(recursive: true);
@@ -75,7 +75,7 @@ class CSVApp {
   }
 
   /// Generates Second file which contains name and most popular brand
-  Future<void> generateSecondOutputFile() async {
+  Future<void> _generateSecondOutputFile() async {
     Map<String, Map<String, double>> pplrBrand = {};
     File output2 = await File('2_output_$fileName').create(recursive: true);
 
