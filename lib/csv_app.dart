@@ -78,14 +78,10 @@ class CSVApp {
   Future<void> generateSecondOutputFile() async {
     Map<String, Map<String, double>> pplrBrand = {};
     File output2 = await File('2_output_$fileName').create(recursive: true);
-    for (var element in listOfItems) {
-      print('$element\n');
-    }
 
     // Calculating the most popular
     for (int i = 0; i < listOfItems.length; i++) {
       //insert a value for the name if no value found
-      //TODO fix Air not showing issue
       if (pplrBrand[listOfItems[i].name] == null) {
         pplrBrand[listOfItems[i].name] = {listOfItems[i].brand: 1};
       } else {
@@ -96,11 +92,19 @@ class CSVApp {
           pplrBrand[listOfItems[i].name]![listOfItems[i].brand] = 1;
         }
       }
-      print(pplrBrand['shoes']!['Air']);
-      print('\n$i:' + pplrBrand.toString());
     }
+// Outputs
+  // {
+  //   "shoes":{
+  //      "Air":2,
+  //      "BonPied":1
+  //   }
+  //   "forks":{
+  //      "Pfitzcarft":1
+  //   }
+  // }
 
-    //Writes the outputs
+    //Writes the outputs in the file
     pplrBrand.forEach((name, value) async {
       Map<String, double> mostPop = {
         value.keys.first: value[value.keys.first] ?? 0.0
@@ -113,21 +117,5 @@ class CSVApp {
       var fileData = output2.readAsStringSync();
       output2.writeAsStringSync('$fileData\n$name,${mostPop.keys.first}');
     });
-
-    pplrBrand.forEach((key, value) {
-      print('$key $value \n');
-    });
   }
 }
-
-
-
-// {
-//   "shoes":{
-//      "Air":2,
-//      "BonPied":1
-//   }
-//   "forks":{
-//      "Pfitzcarft":1
-//   }
-// }
