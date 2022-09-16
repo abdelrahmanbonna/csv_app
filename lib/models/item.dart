@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+/// Used to Store data from CSV files 
 class Item {
   String id;
   String name;
@@ -14,6 +15,7 @@ class Item {
     required this.brand,
   });
 
+  /// Creates an empty object
   factory Item.empty() {
     return Item(
       id: '',
@@ -24,6 +26,7 @@ class Item {
     );
   }
 
+  /// Used to edit the object variables
   Item copyWith({
     String? id,
     String? name,
@@ -39,7 +42,8 @@ class Item {
       brand: brand ?? this.brand,
     );
   }
-
+  
+  /// Used to convert the current object into map
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
@@ -50,6 +54,7 @@ class Item {
     };
   }
 
+  /// Used to make object from a map object
   factory Item.fromMap(Map<String, dynamic> map) {
     return Item(
       id: map['id'] as String,
@@ -60,13 +65,16 @@ class Item {
     );
   }
 
+  /// Used to convert the current object into json
   String toJson() => json.encode(toMap());
 
+  /// Used to make object from a json object
   factory Item.fromJson(String source) => Item.fromMap(json.decode(source) as Map<String, dynamic>);
 
+  /// Used to convert the current object into string
   @override
   String toString() {
-    return 'Item(id: $id, name: $name, area: $area, quantity: $quantity, brand: $brand)';
+    return ' Item( id: $id, name: $name, area: $area, quantity: $quantity, brand: $brand ) ';
   }
 
   @override
