@@ -21,3 +21,5 @@ Files will be generated in same folder of the project.
 Just open a terminal window in the project folder and type:
 
 ``` dart test path/to/file ```
+
+the [test] folder is where the test cases are written.
