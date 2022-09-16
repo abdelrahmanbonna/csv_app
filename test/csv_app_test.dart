@@ -26,8 +26,23 @@ void main() {
   });
 
   group('Checking the values', () {
-    test('1_output_example1.csv should contain name,avarage', () {});
+    test('1_output_example1.csv should contain name,avarage', () {
+      File output1 = File('1_output_example1.csv');
 
-    test('1_output_example1.csv should contain name,brand', () {});
+      var data = output1.readAsStringSync();
+
+      assert(data.split('\n').length == 2 &&
+          data.split('\n').first.split(',').first == 'shoes' &&
+          data.split('\n').first.split(',').last == '2.0');
+    });
+
+    test('1_output_example1.csv should contain name,brand', () {
+      File output2 = File('2_output_example1.csv');
+      var data = output2.readAsStringSync();
+
+      assert(data.split('\n').length == 2 &&
+          data.split('\n').first.split(',').first == 'shoes' &&
+          data.split('\n').first.split(',').last == 'Air');
+    });
   });
 }

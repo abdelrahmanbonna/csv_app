@@ -7,7 +7,7 @@ void main(List<String> arguments) async {
 
   print("Welcome to the CSV Exercise");
   print("Enter the path of the file:");
-  var path = stdin.readLineSync(); //Takes the examples/example1.csv
+  var path = stdin.readLineSync(); //Takes the examples/example1.csv, examples/order_log00.csv, or any file in the folder examples
 
   await app.getDataFromCSV(path.toString()); //Generates the items in the [listOfItems]
 
