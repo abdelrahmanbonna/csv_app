@@ -47,11 +47,11 @@ class CSVApp {
   Future<void> generateFirstOutputFile() async {
     Map sumOfPrd = {};
     Map avarageOfPrd = {};
-    File output1 = File('1_output_$fileName');
+    File output1 = await File('1_output_$fileName').create(recursive: true);
 
     // Calculates the sum of all the products
     for (int i = 0; i < listOfItems.length; i++) {
-      if (i == 0) {
+      if (sumOfPrd[listOfItems[i].name] == null) {
         var lastQ = double.parse(sumOfPrd[listOfItems[i].name] ?? '0');
         sumOfPrd[listOfItems[i].name] =
             lastQ + double.parse(listOfItems[i].quantity);
@@ -69,7 +69,7 @@ class CSVApp {
 
     //Writes the outputs
     avarageOfPrd.forEach((key, value) async {
-      String fileContent = await output1.readAsString();
+      String fileContent = output1.readAsStringSync();
       output1.writeAsStringSync('$fileContent\n$key,$value');
     });
   }
@@ -77,7 +77,7 @@ class CSVApp {
   /// Generates Second file which contains name and most popular brand
   Future<void> generateSecondOutputFile() async {
     Map<String, Map<String, double>> pplrBrand = {};
-    File output2 = File('2_output_$fileName');
+    File output2 = await File('2_output_$fileName').create(recursive: true);
     for (var element in listOfItems) {
       print('$element\n');
     }
@@ -85,17 +85,19 @@ class CSVApp {
     // Calculating the most popular
     for (int i = 0; i < listOfItems.length; i++) {
       //insert a value for the name if no value found
+      //TODO fix Air not showing issue
       if (pplrBrand[listOfItems[i].name] == null) {
         pplrBrand[listOfItems[i].name] = {listOfItems[i].brand: 1};
       } else {
         //insert a value for the brand if no value found and increase it
         if (pplrBrand[listOfItems[i].name]![listOfItems[i].brand] != null) {
-          pplrBrand[listOfItems[i].name]![listOfItems[i].brand] =
-              pplrBrand[listOfItems[i].name]![listOfItems[i].brand]! + 1;
+          pplrBrand[listOfItems[i].name]![listOfItems[i].brand];
         } else {
           pplrBrand[listOfItems[i].name]![listOfItems[i].brand] = 1;
         }
       }
+      print(pplrBrand['shoes']!['Air']);
+      print('\n$i:' + pplrBrand.toString());
     }
 
     //Writes the outputs
@@ -108,13 +110,24 @@ class CSVApp {
           mostPop = {brand: value};
         }
       });
-      var fileData = await output2.readAsString();
+      var fileData = output2.readAsStringSync();
       output2.writeAsStringSync('$fileData\n$name,${mostPop.keys.first}');
     });
 
     pplrBrand.forEach((key, value) {
       print('$key $value \n');
     });
-    print(pplrBrand['shoes']!['Air']);
   }
 }
+
+
+
+// {
+//   "shoes":{
+//      "Air":2,
+//      "BonPied":1
+//   }
+//   "forks":{
+//      "Pfitzcarft":1
+//   }
+// }
